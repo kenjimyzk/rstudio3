@@ -18,7 +18,7 @@ RUN curl -sL http://mirror.utexas.edu/ctan/systems/texlive/tlnet/install-tl-unx.
   && cd .. \
   && rm -rf install-tl
 
-RUN apt-get install -y freeglut3 fonts-ipaexfont fonts-ipafont
+RUN apt-get update && apt-get install -y freeglut3 fonts-ipaexfont fonts-ipafont
 
 # Change environment to Japanese(Character and DateTime)
 ENV PATH /usr/local/texlive/2017/bin/x86_64-linux:$PATH
