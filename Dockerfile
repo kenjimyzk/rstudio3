@@ -9,6 +9,8 @@ RUN apt-get update \
   && apt-get install -y gnupg wget curl libgetopt-long-descriptive-perl \
   libdigest-perl-md5-perl python-pygments fontconfig && rm -rf /var/lib/apt/lists/*
   
+
+
 WORKDIR /
 RUN curl -sL http://mirror.utexas.edu/ctan/systems/texlive/tlnet/install-tl-unx.tar.gz | tar zxf - \
   && mv install-tl-20* install-tl \
@@ -18,10 +20,10 @@ RUN curl -sL http://mirror.utexas.edu/ctan/systems/texlive/tlnet/install-tl-unx.
   && cd .. \
   && rm -rf install-tl
 
-RUN apt-get install -y freeglut3 fonts-ipaexfont fonts-ipafont
+RUN apt-get update && apt-get install -y fonts-ipaexfont fonts-ipafont
 
 # Change environment to Japanese(Character and DateTime)
-ENV PATH /usr/local/texlive/2017/bin/x86_64-linux:$PATH
+
 WORKDIR /home
 ENV LANG ja_JP.UTF-8
 ENV LC_ALL ja_JP.UTF-8
@@ -31,6 +33,17 @@ RUN sed -i '$d' /etc/locale.gen \
 	&& /usr/sbin/update-locale LANG=ja_JP.UTF-8 LANGUAGE="ja_JP:ja"
 RUN /bin/bash -c "source /etc/default/locale"
 RUN ln -sf  /usr/share/zoneinfo/Asia/Tokyo /etc/localtime
+
+RUN Rscript -e "install.packages('repmis')"
+RUN Rscript -e "repmis::InstallOldPackages('bookdown', versions='0.5')"
+RUN Rscript -e "install.packages(c('Cairo', 'extrafont', 'formatR'))"
+
+
+USER rstudio
+RUN git clone https://github.com/kenjimyzk/bookdown_ja_template.git /home/rstudio/bookdown_ja_template
+ADD dot.latexmkrc /home/rstudio/.latexmkrc
+ADD dot.Rprofile /home/rstudio/.Rprofile
+RUN Rscript -e "extrafont::font_import(prompt = FALSE)"
 
 USER root
 CMD ["/init"]  
