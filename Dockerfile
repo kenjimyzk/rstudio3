@@ -20,7 +20,7 @@ RUN curl -sL http://mirror.utexas.edu/ctan/systems/texlive/tlnet/install-tl-unx.
   && cd .. \
   && rm -rf install-tl
 
-RUN apt-get update && apt-get install -y freeglut3 fonts-ipaexfont fonts-ipafont
+RUN apt-get update && apt-get install -y libxt-dev freeglut3 fonts-ipaexfont fonts-ipafont
 
 # Change environment to Japanese(Character and DateTime)
 
@@ -37,7 +37,7 @@ RUN ln -sf  /usr/share/zoneinfo/Asia/Tokyo /etc/localtime
 RUN Rscript -e "install.packages('repmis')"
 RUN Rscript -e "repmis::InstallOldPackages('bookdown', versions='0.5')"
 RUN Rscript -e "install.packages(c('Cairo', 'extrafont', 'formatR'))"
-
+RUN Rscript -e "install.packages(c('mosaic', 'mosaicCalc', 'kableExtra'))"
 
 USER rstudio
 RUN git clone https://github.com/kenjimyzk/bookdown_ja_template.git /home/rstudio/bookdown_ja_template

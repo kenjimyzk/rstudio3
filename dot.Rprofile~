@@ -1,6 +1,0 @@
-Sys.setenv(PATH=paste(Sys.getenv("PATH"),"/usr/local/texlive/2017/bin/x86_64-linux:",sep=":"))
-#options(repos = structure(c(CRAN = "http://cran.ism.ac.jp/")))
-
-# Sys.setenv(RSTUDIO_PDFLATEX = "latexmk -pdf -pdflatex=xelatex")
-# Sys.setenv(RSTUDIO_PDFLATEX = "latexmk")
-# Sys.setlocale(locale = "ja_JP.UTF-8")
