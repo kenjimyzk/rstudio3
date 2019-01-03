@@ -34,8 +34,7 @@ RUN sed -i '$d' /etc/locale.gen \
 RUN /bin/bash -c "source /etc/default/locale"
 RUN ln -sf  /usr/share/zoneinfo/Asia/Tokyo /etc/localtime
 
-RUN Rscript -e "install.packages('repmis')"
-RUN Rscript -e "repmis::InstallOldPackages('bookdown', versions='0.5')"
+RUN Rscript -e "install.packages('bookdown')"
 RUN Rscript -e "install.packages(c('Cairo', 'extrafont', 'formatR'))"
 RUN Rscript -e "install.packages(c('mosaic', 'mosaicCalc', 'kableExtra'))"
 
